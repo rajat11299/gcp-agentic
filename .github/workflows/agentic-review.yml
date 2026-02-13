@@ -41,7 +41,7 @@ jobs:
 
       - name: Run OPA Policy Check
         # specific failure to false so the Agent can explain the error instead of just failing the build immediately
-        continue-on-error: true 
+        continue-on-error: false 
         run: |
           opa eval --input tfplan.json --data policies/ -f json "data.terraform.gcp.deny" > opa_violations.json
 
