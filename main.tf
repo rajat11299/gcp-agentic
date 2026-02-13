@@ -52,3 +52,32 @@ resource "google_storage_bucket" "compliant_bucket" {
   # This is TRUE, fulfilling the security requirement
   uniform_bucket_level_access = true 
 }
+
+# --------------------------------------------------------------------------------
+# VIOLATION 3: GCE Instance with Public IP & Wrong Region
+# --------------------------------------------------------------------------------
+resource "google_compute_instance" "vulnerable_vm" {
+  name         = "agent-test-vulnerable-vm"
+  machine_type = "n1-standard-1"
+  
+  # VIOLATION A: Wrong zone/region (policy requires us-central1)
+  zone         = "us-east1-b" 
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    network = "default"
+
+    # VIOLATION B: Adding access_config creates a Public IP
+    access_config {
+      // This empty block assigns an ephemeral external IP
+    }
+  }
+
+  # Good practice note: Agent should also check for deletion_protection
+  deletion_protection = false
+}

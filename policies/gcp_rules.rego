@@ -22,3 +22,19 @@ deny contains msg if {
         [resource.name]
     )
 }
+
+deny contains msg if {
+    resource := input.resource_changes[_]
+    resource.type == "google_compute_instance"
+    resource.change.after != null
+
+    interfaces := resource.change.after.network_interface
+    some i
+    interfaces[i].access_config
+    count(interfaces[i].access_config) > 0
+
+    msg := sprintf(
+        "security-risk: Instance '%v' is configured with a public IP. This is prohibited by policy.",
+        [resource.name]
+    )
+}
