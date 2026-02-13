@@ -42,7 +42,6 @@ jobs:
       - name: Run OPA Policy Check
         continue-on-error: false
         run: |
-          set +e
           opa eval --input tfplan.json --data policies/ -f json "data.terraform.gcp.deny" > opa_violations.json
           cat opa_violations.json
           exit 0
