@@ -38,12 +38,12 @@ jobs:
           terraform init
           terraform plan -out=tfplan.binary
           terraform show -json tfplan.binary > tfplan.json
-          cat tfplan.json
 
       - name: Run OPA Policy Check
         # specific failure to false so the Agent can explain the error instead of just failing the build immediately
         continue-on-error: false 
         run: |
+          cat tfplan.json
           opa eval --input tfplan.json --data policies/ -f json "data.terraform.gcp.deny" > opa_violations.json
 
       - name: Setup Python for Agent
