@@ -61,7 +61,7 @@ resource "google_compute_instance" "vulnerable_vm" {
   machine_type = "n1-standard-1"
   
   # VIOLATION A: Wrong zone/region (policy requires us-central1)
-  zone         = "us-central1-b" 
+  zone         = "us-east1-b" 
 
   boot_disk {
     initialize_params {
