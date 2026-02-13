@@ -1,6 +1,6 @@
 package terraform.gcp
 
-deny[msg] {
+deny contains msg if {
     resource := input.resource_changes[_]
     resource.type == "google_storage_bucket"
     resource.change.after != null
@@ -12,7 +12,7 @@ deny[msg] {
     )
 }
 
-deny[msg] {
+deny contains msg if {
     resource := input.resource_changes[_]
     resource.change.after != null
     resource.change.after.region != "us-central1"
