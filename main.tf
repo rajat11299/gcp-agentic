@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project = "your-gcp-project-id" # Replace with your project ID
+  project = "gcp-test-bruce1" # Replace with your project ID
   region  = "us-central1"
 }
 
