@@ -54,7 +54,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} # Or your LLM key
         run: |
-          pip install requests
+          pip install requests google-generativeai
           python agent/agent_review.py
 
       - name: Post Review to PR
